@@ -8,6 +8,18 @@ provider "aws" {
   }
 }
 
+# add a strong password policy for the account
+resource "aws_iam_account_password_policy" "account_password_policy" {
+  minimum_password_length        = 16
+  require_lowercase_characters   = true
+  require_numbers                = true
+  require_uppercase_characters   = true
+  require_symbols                = true
+  allow_users_to_change_password = true
+  max_password_age               = 90
+  password_reuse_prevention      = 2
+}
+
 # enable guardduty for the account
 resource "aws_guardduty_detector" "account_guardduty_detector" {
   enable = true
